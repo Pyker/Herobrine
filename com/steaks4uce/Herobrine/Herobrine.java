@@ -70,7 +70,7 @@ public class Herobrine extends JavaPlugin {
                 settingsFile.put("allow-fire", Boolean.toString(useFire));
                 settingsFile.put("fire-trails", Boolean.toString(fireTrails));
                 settingsFile.put("can-attack", Boolean.toString(canAttack));
-                settingsFile.store(out, "Configuration file for Herobrine 1.3");
+                settingsFile.store(out, "Configuration file for Herobrine 1.4");
             } catch (IOException ex) {
                 log.info("[Herobrine] Failed to create the configuration file!");
             }
@@ -107,7 +107,6 @@ public class Herobrine extends JavaPlugin {
         pm.registerEvent(Event.Type.ENTITY_DEATH, this.entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.CREATURE_SPAWN, this.entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_MOVE, this.playerListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.ENTITY_TARGET, this.entityListener, Event.Priority.Normal, this); 
         pm.registerEvent(Event.Type.PLAYER_CHAT, this.playerListener, Event.Priority.Normal, this);
         
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
