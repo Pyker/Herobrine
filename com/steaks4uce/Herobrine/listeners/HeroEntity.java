@@ -70,4 +70,15 @@ public class HeroEntity extends EntityListener {
             }
         }
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public void onEntityTarget(EntityTargetEvent event) {
+        Entity e = event.getTarget();
+        if (e.equals(plugin.hbEntity)) {
+            event.setCancelled(true);
+        }
+    } 
+>>>>>>> bf73d5089bd3919491cf673a413408d85fc14865
 }
