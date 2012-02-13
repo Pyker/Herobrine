@@ -5,14 +5,21 @@ import com.steaks4uce.Herobrine.listeners.HeroEntity;
 import com.steaks4uce.Herobrine.formats.SmokeArea;
 
 import com.steaks4uce.Herobrine.text.CustomLogger;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -48,6 +55,7 @@ public class Herobrine extends JavaPlugin {
     public static Boolean isAttacking = false;
     public static Boolean canAttack = true;
     public static Boolean modifyWorld = Boolean.valueOf(true);
+    public static Boolean useStatistics = true;
 
     @Override
     public void onDisable() {}
@@ -70,6 +78,7 @@ public class Herobrine extends JavaPlugin {
                 settingsFile.put("allow-fire", Boolean.toString(useFire));
                 settingsFile.put("fire-trails", Boolean.toString(fireTrails));
                 settingsFile.put("can-attack", Boolean.toString(canAttack));
+                settingsFile.put("use-statistics", Boolean.toString(useStatistics));
                 settingsFile.store(out, "Configuration file for Herobrine 1.4");
             } catch (IOException ex) {
                 log.info("[Herobrine] Failed to create the configuration file!");
@@ -87,6 +96,7 @@ public class Herobrine extends JavaPlugin {
                     useFire = Boolean.valueOf(settingsFile.getProperty("allow-fire"));
                     fireTrails = Boolean.valueOf(settingsFile.getProperty("fire-trails"));
                     canAttack = Boolean.valueOf(settingsFile.getProperty("can-attack"));
+                    useStatistics = Boolean.valueOf(settingsFile.getProperty("use-statistics"));
                 } catch (IOException ex) {
                     log.info("[Herobrine] Failed to load the configuration file!");
                     getServer().getPluginManager().disablePlugin(this);
@@ -134,6 +144,15 @@ public class Herobrine extends JavaPlugin {
                 }
             }
         }, 0L, 20L);
+        
+        try {
+            if (useStatistics) {
+                URL server = new URL("http://www.nkrecklow.com/herobrine/enable.php?write=true");
+                URLConnection connection = server.openConnection();
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String result = br.readLine();
+            }
+        } catch (Exception ex) {}
     }
 
     public boolean isDead() {
