@@ -1,23 +1,23 @@
 package com.steaks4uce.Herobrine.listeners;
-import com.steaks4uce.Herobrine.Herobrine;
-import com.steaks4uce.Herobrine.text.CustomLogger;
-
-import com.steaks4uce.Herobrine.text.TextGenerator;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.Entity;   
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityListener;
-import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class HeroEntity extends EntityListener {
+import com.steaks4uce.Herobrine.Herobrine;
+import com.steaks4uce.Herobrine.text.CustomLogger;
+import com.steaks4uce.Herobrine.text.TextGenerator;
+
+public class HeroEntity implements Listener {
     public static Herobrine plugin;
     CustomLogger log = new CustomLogger();
     
@@ -25,7 +25,7 @@ public class HeroEntity extends EntityListener {
         plugin = instance;
     }
 
-    @Override
+    @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         Entity e = event.getEntity();
         if (e.equals(plugin.hbEntity)) {
@@ -38,7 +38,7 @@ public class HeroEntity extends EntityListener {
         }
     }
 
-    @Override
+    @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         Entity e = event.getEntity();
         if (event.getCreatureType().equals(CreatureType.ZOMBIE) && Herobrine.trackingEntity && plugin.isDead()) {
@@ -47,7 +47,7 @@ public class HeroEntity extends EntityListener {
         }
     }
 
-    @Override
+    @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         Entity e = event.getEntity();
         World w = event.getEntity().getWorld();
