@@ -1,14 +1,5 @@
 package com.steaks4uce.Herobrine.listeners;
-<<<<<<< HEAD
-import org.bukkit.GameMode;
-=======
-import com.steaks4uce.Herobrine.Herobrine;
-import com.steaks4uce.Herobrine.PossibleActions;
-import com.steaks4uce.Herobrine.formats.SmokeArea;
-import com.steaks4uce.Herobrine.text.CustomLogger;
-import com.steaks4uce.Herobrine.text.TextGenerator;
 
->>>>>>> Cleaned up old, useless code, updated to 1.1-R6
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -18,16 +9,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
-<<<<<<< HEAD
-
 import com.steaks4uce.Herobrine.Herobrine;
 import com.steaks4uce.Herobrine.PossibleActions;
 import com.steaks4uce.Herobrine.formats.SmokeArea;
 import com.steaks4uce.Herobrine.text.CustomLogger;
 import com.steaks4uce.Herobrine.text.TextGenerator;
-=======
 import org.bukkit.entity.EntityType;
->>>>>>> Cleaned up old, useless code, updated to 1.1-R6
 
 public class HeroBlock implements Listener {
     public static Herobrine plugin;

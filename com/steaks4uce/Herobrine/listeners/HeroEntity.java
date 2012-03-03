@@ -1,10 +1,7 @@
 package com.steaks4uce.Herobrine.listeners;
+
 import org.bukkit.Material;
 import org.bukkit.World;
-<<<<<<< HEAD
-import org.bukkit.entity.CreatureType;
-=======
->>>>>>> Cleaned up old, useless code, updated to 1.1-R6
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,14 +12,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-
 import com.steaks4uce.Herobrine.Herobrine;
 import com.steaks4uce.Herobrine.text.CustomLogger;
 import com.steaks4uce.Herobrine.text.TextGenerator;
-<<<<<<< HEAD
-=======
 import org.bukkit.entity.EntityType;
->>>>>>> Cleaned up old, useless code, updated to 1.1-R6
 
 public class HeroEntity implements Listener {
     public static Herobrine plugin;

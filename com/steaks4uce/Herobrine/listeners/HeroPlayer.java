@@ -4,12 +4,8 @@ import java.util.Random;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-<<<<<<< HEAD
 import org.bukkit.event.player.PlayerChatEvent;
-=======
->>>>>>> Cleaned up old, useless code, updated to 1.1-R6
 import org.bukkit.event.player.PlayerMoveEvent;
-
 import com.steaks4uce.Herobrine.Herobrine;
 import com.steaks4uce.Herobrine.PossibleActions;
 
@@ -52,30 +48,6 @@ public class HeroPlayer implements Listener {
             if (Herobrine.modifyWorld) {
                 actions.placeChest(p);
             }
-<<<<<<< HEAD
-        } else if (eventChoice == 9) {
-            if (Herobrine.sendMessages) {
-                actions.sendMessage(p);
-            }
-        } else if (eventChoice == 10) {
-            if (Herobrine.modifyWorld) {
-                actions.digTunnel(p);
-            }
-        }
-    }
-    
-    @EventHandler
-    public void onPlayerChat(PlayerChatEvent event) {
-        String m = event.getMessage();
-        m = m.toLowerCase();
-        if (m.contains("herobrine")) {
-            int i = r.nextInt(11);
-            if (i == 1) {
-                Player p = event.getPlayer();
-                actions.sendMessage(p);
-            }
-=======
->>>>>>> Cleaned up old, useless code, updated to 1.1-R6
         }
     }
 }
