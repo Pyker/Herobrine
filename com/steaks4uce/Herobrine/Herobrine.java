@@ -11,15 +11,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -31,7 +28,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -242,19 +238,7 @@ public class Herobrine extends JavaPlugin {
                         p.sendMessage(t + "attack"  + w + " - Attack a certain player.");
                         p.sendMessage(t + "appear"  + w + " - Appear near a certain player.");
                         p.sendMessage(t + "bury"  + w + " - Bury a certain player alive.");
-                        p.sendMessage(t + "tunnel" + w + " - Tunnel near a player.");
                         p.sendMessage(t + "remove"  + w + " - Remove him in case of error.");
-                    } else if (args[0].equalsIgnoreCase("tunnel")) {
-                        Player p = (Player) sender;
-                        Player target = getServer().getPlayer(args[1]);
-                        if (p.isOp()) {
-                            actions.digTunnel(target);
-                            p.sendMessage(ChatColor.GREEN + "Herobrine tunneled under " + target.getName());
-                            cm.command(p.getName(), "/hb tunnel");
-                        } else {
-                            p.sendMessage(ChatColor.RED + "You do not have permission for this!");
-                            cm.failed(p.getName(), "/hb tunnel");
-                        }
                     } else {
                         Player p = (Player)sender;
                         p.sendMessage(ChatColor.RED + "Not a valid command!");

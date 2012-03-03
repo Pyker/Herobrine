@@ -30,15 +30,15 @@ public class CustomLogger {
         } else if (event == 12) {
             Herobrine.log.info("[Herobrine] Herobrine buried " + p + "!");
         } else if (event == 13) {
-            Herobrine.log.info("[Herobrine] Herobrine sent a message to " + p + "!");
+            Herobrine.log.info("This function has been removed!");
         } else if (event == 14) {
             Herobrine.log.info("This function has been removed!");
         } else if (event == 15) {
-            Herobrine.log.info("[Herobrine] Herobrine dug a tunnel under " + p + "!");
+            Herobrine.log.info("This function has been removed!");
         } else if (event == 16) {
-            Herobrine.log.info("[Herobrine] Herobrine created an ender crystal near " + p + "!");
+            Herobrine.log.info("This function has been removed!");
         } else if (event == 17) {
-            Herobrine.log.info("[Herobrine] Herobrine created a explosion near " + p + "!");
+            Herobrine.log.info("This function has been removed!");
         }
     } 
     

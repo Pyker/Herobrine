@@ -1,7 +1,10 @@
 package com.steaks4uce.Herobrine.listeners;
 import org.bukkit.Material;
 import org.bukkit.World;
+<<<<<<< HEAD
 import org.bukkit.entity.CreatureType;
+=======
+>>>>>>> Cleaned up old, useless code, updated to 1.1-R6
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +19,10 @@ import org.bukkit.inventory.ItemStack;
 import com.steaks4uce.Herobrine.Herobrine;
 import com.steaks4uce.Herobrine.text.CustomLogger;
 import com.steaks4uce.Herobrine.text.TextGenerator;
+<<<<<<< HEAD
+=======
+import org.bukkit.entity.EntityType;
+>>>>>>> Cleaned up old, useless code, updated to 1.1-R6
 
 public class HeroEntity implements Listener {
     public static Herobrine plugin;
@@ -41,7 +48,7 @@ public class HeroEntity implements Listener {
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         Entity e = event.getEntity();
-        if (event.getCreatureType().equals(CreatureType.ZOMBIE) && Herobrine.trackingEntity && plugin.isDead()) {
+        if (event.getEntityType().equals(EntityType.ZOMBIE) && Herobrine.trackingEntity && plugin.isDead()) {
             plugin.hbEntity = e;
             Herobrine.trackingEntity = Boolean.valueOf(false);
         }

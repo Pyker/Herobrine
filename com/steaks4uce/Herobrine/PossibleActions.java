@@ -1,10 +1,8 @@
 package com.steaks4uce.Herobrine;
 import com.steaks4uce.Herobrine.text.CustomLogger;
 import com.steaks4uce.Herobrine.text.TextGenerator;
-import com.steaks4uce.Herobrine.tunnels.TunnelHandler;
 
 import java.util.Random;
-import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -13,10 +11,8 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 
@@ -86,7 +82,7 @@ public class PossibleActions {
             World w = p.getWorld();
             w.createExplosion(p.getLocation().add(3, 0, 3), -1.0F);
             Herobrine.trackingEntity = true;
-            w.spawnCreature(p.getLocation().add(3, 0, 3), CreatureType.ZOMBIE);
+            w.spawnCreature(p.getLocation().add(3, 0, 3), EntityType.ZOMBIE);
             Zombie z = (Zombie) plugin.hbEntity;
             z.setTarget(p);
             Herobrine.isAttacking = true;
@@ -107,7 +103,7 @@ public class PossibleActions {
             Block b = p.getLocation().add(5, 0, 0).getBlock();
             if (b.getType().equals(Material.AIR)) {
                 Herobrine.trackingEntity = true;
-                w.spawnCreature(p.getLocation().add(5, 0, 0), CreatureType.ZOMBIE);
+                w.spawnCreature(p.getLocation().add(5, 0, 0), EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     public void run() {
                         plugin.hbEntity.remove();
@@ -160,46 +156,6 @@ public class PossibleActions {
                 }
             }, 20L);
             log.event(12, p.getName());
-        }
-    }
-    
-    public void sendMessage(Player p) {
-        String s = "<" + ChatColor.RED + "Herobrine" + ChatColor.WHITE + "> ";
-        p.sendMessage(s + "I'm here.");
-        log.event(13, p.getName());
-    }
-    
-    public void digTunnel(Player p) {
-        Random r = new Random();
-        TunnelHandler th = new TunnelHandler();
-        Location l = p.getLocation().subtract(0, 5, 0);
-        int s = r.nextInt(26);
-        if (s < 10) {
-            s = 10;
-        }
-        th.createTunnel(s, l, 4);
-        log.event(15, p.getName());
-    }
-    
-    public void createCrystal(Player p) {
-        Location l = p.getLocation().add(5, 0, 0);
-        Block b = l.getBlock();
-        Block a = b.getLocation().subtract(0, 1, 0).getBlock();
-        World w = p.getWorld();
-        if (b.getType().equals(Material.AIR) && !(a.getType().equals(Material.AIR))) {
-            w.spawn(l, EnderCrystal.class);
-            log.event(16, p.getName());
-        }
-    }
-    
-    public void createTNT(Player p) {
-        Location l = p.getLocation().add(5, 0, 0);
-        Block a = l.subtract(0, 1, 0).getBlock();
-        Block b = l.getBlock();
-        World w = p.getWorld();
-        if (a.getType() != Material.AIR && b.getType().equals(Material.AIR)) {
-            w.spawn(l, TNTPrimed.class);
-            log.event(17, p.getName());
         }
     }
 }
