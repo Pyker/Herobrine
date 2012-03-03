@@ -1,14 +1,16 @@
 package com.steaks4uce.Herobrine.listeners;
+import java.util.Random;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+
 import com.steaks4uce.Herobrine.Herobrine;
 import com.steaks4uce.Herobrine.PossibleActions;
 
-import java.util.Random;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerMoveEvent;
-
-public class HeroPlayer extends PlayerListener {
+public class HeroPlayer implements Listener {
     public static Herobrine plugin;
     Random r = new Random();
     PossibleActions actions = new PossibleActions(plugin);
@@ -17,7 +19,7 @@ public class HeroPlayer extends PlayerListener {
         plugin = instance;
     }
 
-    @Override
+    @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player p = event.getPlayer();
         int eventChoice = r.nextInt(Herobrine.innerChance + 1);
@@ -58,7 +60,7 @@ public class HeroPlayer extends PlayerListener {
         }
     }
     
-    @Override
+    @EventHandler
     public void onPlayerChat(PlayerChatEvent event) {
         String m = event.getMessage();
         m = m.toLowerCase();

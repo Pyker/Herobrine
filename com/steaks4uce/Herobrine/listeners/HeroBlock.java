@@ -1,10 +1,4 @@
 package com.steaks4uce.Herobrine.listeners;
-import com.steaks4uce.Herobrine.Herobrine;
-import com.steaks4uce.Herobrine.formats.SmokeArea;
-import com.steaks4uce.Herobrine.PossibleActions;
-import com.steaks4uce.Herobrine.text.CustomLogger;
-
-import com.steaks4uce.Herobrine.text.TextGenerator;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -12,11 +6,18 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
-import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 
-public class HeroBlock extends BlockListener {
+import com.steaks4uce.Herobrine.Herobrine;
+import com.steaks4uce.Herobrine.PossibleActions;
+import com.steaks4uce.Herobrine.formats.SmokeArea;
+import com.steaks4uce.Herobrine.text.CustomLogger;
+import com.steaks4uce.Herobrine.text.TextGenerator;
+
+public class HeroBlock implements Listener {
     public static Herobrine plugin;
     CustomLogger log = new CustomLogger();
 
@@ -24,7 +25,7 @@ public class HeroBlock extends BlockListener {
         plugin = instance;
     }
 
-    @Override
+    @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event) {
         Block b = event.getBlock();
         if (event.getCause().equals(BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)) {
@@ -59,7 +60,7 @@ public class HeroBlock extends BlockListener {
         }
     }
     
-    @Override
+    @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Block b = event.getBlock();
         SmokeArea sa = null;
