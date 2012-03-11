@@ -19,10 +19,11 @@ import org.bukkit.entity.EntityType;
 
 public class HeroEntity implements Listener {
     public Herobrine plugin;
-    CustomLogger log = new CustomLogger(plugin);
+    CustomLogger log;
     
     public HeroEntity(Herobrine instance) {
         plugin = instance;
+        log = new CustomLogger(plugin);
     }
 
     @EventHandler

@@ -18,10 +18,11 @@ import org.bukkit.entity.EntityType;
 
 public class HeroBlock implements Listener {
     public Herobrine plugin;
-    CustomLogger log = new CustomLogger(plugin);
+    CustomLogger log;
 
     public HeroBlock(Herobrine instance) {
         plugin = instance;
+        log = new CustomLogger(plugin);
     }
 
     @EventHandler
@@ -47,11 +48,11 @@ public class HeroBlock implements Listener {
                     TextGenerator tg = new TextGenerator();
                     plugin.getServer().broadcastMessage(tg.getMessage());
                 }
-                plugin.trackingEntity = Boolean.valueOf(true);
+                plugin.trackingEntity = true;
                 w.spawnCreature(b.getLocation(), EntityType.ZOMBIE);
                 Zombie z = (Zombie) plugin.hbEntity;
                 z.setTarget(p);
-                log.event(1, p.getName()); 
+                log.event(1, p.getName());
             }
         }
     }
