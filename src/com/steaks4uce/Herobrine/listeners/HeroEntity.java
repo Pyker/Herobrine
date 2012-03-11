@@ -18,8 +18,8 @@ import com.steaks4uce.Herobrine.text.TextGenerator;
 import org.bukkit.entity.EntityType;
 
 public class HeroEntity implements Listener {
-    public static Herobrine plugin;
-    CustomLogger log = new CustomLogger();
+    public Herobrine plugin;
+    CustomLogger log = new CustomLogger(plugin);
     
     public HeroEntity(Herobrine instance) {
         plugin = instance;
@@ -41,9 +41,9 @@ public class HeroEntity implements Listener {
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         Entity e = event.getEntity();
-        if (event.getEntityType().equals(EntityType.ZOMBIE) && Herobrine.trackingEntity && plugin.isDead()) {
+        if (event.getEntityType().equals(EntityType.ZOMBIE) && plugin.trackingEntity && plugin.isDead()) {
             plugin.hbEntity = e;
-            Herobrine.trackingEntity = Boolean.valueOf(false);
+            plugin.trackingEntity = false;
         }
     }
 
@@ -54,14 +54,14 @@ public class HeroEntity implements Listener {
         if (e.equals(plugin.hbEntity)) {
             w.dropItemNaturally(e.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
             w.createExplosion(e.getLocation(), -1.0F);
-            Herobrine.isAttacking = false;
+            plugin.isAttacking = false;
             event.setDroppedExp(50);
             event.getDrops().clear();
             if(e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
                 EntityDamageByEntityEvent ev = (EntityDamageByEntityEvent) e.getLastDamageCause();
                 if(ev.getDamager() instanceof Player) {
                     Player p = (Player)ev.getDamager();
-                    if (Herobrine.sendMessages) {
+                    if (plugin.sendMessages) {
                         TextGenerator tg = new TextGenerator();
                         p.sendMessage(tg.getMessage());
                     } 

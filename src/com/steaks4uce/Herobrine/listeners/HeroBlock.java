@@ -17,8 +17,8 @@ import com.steaks4uce.Herobrine.text.TextGenerator;
 import org.bukkit.entity.EntityType;
 
 public class HeroBlock implements Listener {
-    public static Herobrine plugin;
-    CustomLogger log = new CustomLogger();
+    public Herobrine plugin;
+    CustomLogger log = new CustomLogger(plugin);
 
     public HeroBlock(Herobrine instance) {
         plugin = instance;
@@ -33,21 +33,21 @@ public class HeroBlock implements Listener {
             Block netherRack = b.getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock();
             Block mossyCobble = b.getLocation().subtract(0.0D, 2.0D, 0.0D).getBlock();
             if (netherRack.getType().equals(Material.NETHERRACK) && mossyCobble.getType().equals(Material.MOSSY_COBBLESTONE) && plugin.isDead() && plugin.canSpawn(p.getWorld())) {
-                Herobrine.isAttacking = true;
-                if (Herobrine.changeEnvironment) {
+                plugin.isAttacking = true;
+                if (plugin.changeEnvironment) {
                     w.setStorm(true);
                     w.setTime(14200); 
                 }
-                if (Herobrine.removeMossyCobblestone) {
+                if (plugin.removeMossyCobblestone) {
                     mossyCobble.setType(Material.COBBLESTONE);
                 }
                 w.strikeLightning(b.getLocation());
                 w.createExplosion(b.getLocation(), -1.0F);
-                if (Herobrine.sendMessages) {
+                if (plugin.sendMessages) {
                     TextGenerator tg = new TextGenerator();
                     plugin.getServer().broadcastMessage(tg.getMessage());
                 }
-                Herobrine.trackingEntity = Boolean.valueOf(true);
+                plugin.trackingEntity = Boolean.valueOf(true);
                 w.spawnCreature(b.getLocation(), EntityType.ZOMBIE);
                 Zombie z = (Zombie) plugin.hbEntity;
                 z.setTarget(p);

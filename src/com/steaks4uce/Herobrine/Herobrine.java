@@ -1,10 +1,5 @@
 package com.steaks4uce.Herobrine;
-import com.steaks4uce.Herobrine.listeners.HeroPlayer;
-import com.steaks4uce.Herobrine.listeners.HeroBlock;
-import com.steaks4uce.Herobrine.listeners.HeroEntity;
-import com.steaks4uce.Herobrine.formats.SmokeArea;
 
-import com.steaks4uce.Herobrine.text.CustomLogger;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -28,48 +24,53 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
+import com.steaks4uce.Herobrine.formats.SmokeArea;
+import com.steaks4uce.Herobrine.listeners.HeroBlock;
+import com.steaks4uce.Herobrine.listeners.HeroEntity;
+import com.steaks4uce.Herobrine.listeners.HeroPlayer;
+import com.steaks4uce.Herobrine.text.CustomLogger;
+
 public class Herobrine extends JavaPlugin {
-    private final HeroEntity entityListener = new HeroEntity(this);
-    private final HeroBlock blockListener = new HeroBlock(this);
-    private final HeroPlayer playerListener = new HeroPlayer(this);
-    public static final Logger log = Logger.getLogger("Minecraft");
-    public static Boolean trackingEntity = Boolean.valueOf(false);
+    public Logger log;
+    public Boolean trackingEntity = false;
     public Entity hbEntity;
-    public static int innerChance = 100000;
+    public int innerChance = 100000;
     public ArrayList<SmokeArea> smokes = new ArrayList<SmokeArea>();
-    PossibleActions actions = new PossibleActions(this);
-    public static Boolean removeMossyCobblestone = Boolean.valueOf(true);
-    public static Boolean changeEnvironment = Boolean.valueOf(true);
-    public static Boolean useFire = Boolean.valueOf(true);
-    public static Boolean fireTrails = Boolean.valueOf(true);
-    public static Boolean sendMessages = Boolean.valueOf(true);
-    public static Boolean isAttacking = false;
-    public static Boolean canAttack = true;
-    public static Boolean modifyWorld = Boolean.valueOf(true);
-    public static Boolean useStatistics = true;
+    private PossibleActions actions = new PossibleActions(this);
+    public Boolean removeMossyCobblestone = true;
+    public Boolean changeEnvironment = true;
+    public Boolean useFire = true;
+    public Boolean fireTrails = true;
+    public Boolean sendMessages = true;
+    public Boolean isAttacking = false;
+    public Boolean canAttack = true;
+    public Boolean modifyWorld = true;
+    public Boolean useStatistics = true;
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+    	log.info("Version " + this.getDescription().getVersion() + " disabled.");
+    }
 
     @Override
-    public void onEnable() {    
-    String mainDirectory = "plugins/Herobrine";
-    File configFile = new File(mainDirectory + File.separator + "Settings.properties");
-    Properties settingsFile = new Properties();
-        new File(mainDirectory).mkdir();
+    public void onEnable() {
+    	log = this.getLogger();
+    	File mainDirectory = this.getDataFolder();
+    	File configFile = new File(mainDirectory, "Settings.properties");
+    	Properties settingsFile = new Properties();
+        mainDirectory.mkdir();
         if (!configFile.exists()) {
             try {
                 configFile.createNewFile();
                 FileOutputStream out = new FileOutputStream(configFile);
-                settingsFile.put("modify-world", Boolean.toString(modifyWorld.booleanValue()));
-                settingsFile.put("send-messages", Boolean.toString(sendMessages.booleanValue()));
-                settingsFile.put("change-environment", Boolean.toString(changeEnvironment.booleanValue()));
-                settingsFile.put("remove-mossystone", Boolean.toString(removeMossyCobblestone.booleanValue()));
+                settingsFile.put("modify-world", Boolean.toString(modifyWorld));
+                settingsFile.put("send-messages", Boolean.toString(sendMessages));
+                settingsFile.put("change-environment", Boolean.toString(changeEnvironment));
+                settingsFile.put("remove-mossystone", Boolean.toString(removeMossyCobblestone));
                 settingsFile.put("action-chance", Integer.toString(innerChance));
                 settingsFile.put("allow-fire", Boolean.toString(useFire));
                 settingsFile.put("fire-trails", Boolean.toString(fireTrails));
@@ -77,7 +78,7 @@ public class Herobrine extends JavaPlugin {
                 settingsFile.put("use-statistics", Boolean.toString(useStatistics));
                 settingsFile.store(out, "Configuration file for Herobrine 1.4");
             } catch (IOException ex) {
-                log.info("[Herobrine] Failed to create the configuration file!");
+                log.info("Failed to create the configuration file!");
             }
         } else {
             try {
@@ -94,22 +95,21 @@ public class Herobrine extends JavaPlugin {
                     canAttack = Boolean.valueOf(settingsFile.getProperty("can-attack"));
                     useStatistics = Boolean.valueOf(settingsFile.getProperty("use-statistics"));
                 } catch (IOException ex) {
-                    log.info("[Herobrine] Failed to load the configuration file!");
+                    log.info("Failed to load the configuration file!");
                     getServer().getPluginManager().disablePlugin(this);
                 }
             } catch (FileNotFoundException ex) {
-                log.info("[Herobrine] Failed to load the configuration file!");
+                log.info("Failed to load the configuration file!");
                 getServer().getPluginManager().disablePlugin(this);
             }
         }
         
-        PluginDescriptionFile pdfFile = getDescription();
-        log.info("[Herobrine] Herobrine " + pdfFile.getVersion() + " is enabled!");
+        log.info("Version " + this.getDescription().getVersion() + " is enabled!");
         
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(this.blockListener, this);
-        pm.registerEvents(this.entityListener, this);
-        pm.registerEvents(this.playerListener, this);
+        pm.registerEvents(new HeroBlock(this), this);
+        pm.registerEvents(new HeroEntity(this), this);
+        pm.registerEvents(new HeroPlayer(this), this);
         
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
@@ -142,6 +142,7 @@ public class Herobrine extends JavaPlugin {
                 URL server = new URL("http://www.nkrecklow.com/herobrine/enable.php?write=true");
                 URLConnection connection = server.openConnection();
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                @SuppressWarnings("unused")
                 String result = br.readLine();
             }
         } catch (Exception ex) {}
@@ -165,7 +166,7 @@ public class Herobrine extends JavaPlugin {
     
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        CustomLogger cm = new CustomLogger();
+        CustomLogger cm = new CustomLogger(this);
         if (cmd.getName().equals("hb")) {
             try {
                 if (sender instanceof Player) {
@@ -245,14 +246,14 @@ public class Herobrine extends JavaPlugin {
                         p.sendMessage(ChatColor.RED + "Type '/hb help' for help");
                     }
                 } else { 
-                    log.info("[Herobrine] You must be a player to use this command!");
+                    log.info("You must be a player to use this command!");
                 }
             } catch (Exception ex) {
                 if (sender instanceof Player) {
                     Player p = (Player)sender;
                     p.sendMessage(ChatColor.RED + "Type '/hb help' for help");
                 } else {
-                    log.info("[Herobrine] You must be a player to use this command!");
+                    log.info("You must be a player to use this command!");
                 }
             }
         }

@@ -1,4 +1,5 @@
 package com.steaks4uce.Herobrine;
+
 import com.steaks4uce.Herobrine.text.CustomLogger;
 import com.steaks4uce.Herobrine.text.TextGenerator;
 
@@ -17,8 +18,8 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 
 public class PossibleActions {
-    public static Herobrine plugin;
-    CustomLogger log = new CustomLogger();
+    public Herobrine plugin;
+    CustomLogger log = new CustomLogger(plugin);
     
     public PossibleActions(Herobrine instance) {
         plugin = instance;
@@ -78,15 +79,15 @@ public class PossibleActions {
     }
         
     public void attackPlayer(Player p) {
-        if (plugin.isDead() && Herobrine.canAttack && plugin.canSpawn(p.getWorld())) {
+        if (plugin.isDead() && plugin.canAttack && plugin.canSpawn(p.getWorld())) {
             World w = p.getWorld();
             w.createExplosion(p.getLocation().add(3, 0, 3), -1.0F);
-            Herobrine.trackingEntity = true;
+            plugin.trackingEntity = true;
             w.spawnCreature(p.getLocation().add(3, 0, 3), EntityType.ZOMBIE);
             Zombie z = (Zombie) plugin.hbEntity;
             z.setTarget(p);
-            Herobrine.isAttacking = true;
-            if (Herobrine.sendMessages) {
+            plugin.isAttacking = true;
+            if (plugin.sendMessages) {
                 TextGenerator tg = new TextGenerator();
                 p.sendMessage(tg.getMessage());
             }
@@ -102,7 +103,7 @@ public class PossibleActions {
             World w = p.getWorld();
             Block b = p.getLocation().add(5, 0, 0).getBlock();
             if (b.getType().equals(Material.AIR)) {
-                Herobrine.trackingEntity = true;
+                plugin.trackingEntity = true;
                 w.spawnCreature(p.getLocation().add(5, 0, 0), EntityType.ZOMBIE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     public void run() {
@@ -117,7 +118,7 @@ public class PossibleActions {
     public void randomFire(Player p) {
         Block fire = p.getLocation().add(5, 0, 0).getBlock();
         Block ground = fire.getLocation().subtract(0, 1, 0).getBlock();
-        if (fire.getTypeId() == 0 && ground.getTypeId() != 0 && Herobrine.useFire) {
+        if (fire.getTypeId() == 0 && ground.getTypeId() != 0 && plugin.useFire) {
             fire.setType(Material.FIRE);
             log.event(7, p.getName());
         }
